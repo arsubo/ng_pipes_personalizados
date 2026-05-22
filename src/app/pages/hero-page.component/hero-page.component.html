@@ -1,40 +1,307 @@
-<div class="min-h-[60vh] flex flex-col items-center justify-center p-4">
-  <div class="card w-full max-w-2xl bg-base-200/40 backdrop-blur-xl shadow-2xl border border-base-content/10 relative overflow-hidden rounded-3xl p-8 md:p-12 transition-all hover:shadow-primary/10 hover:border-primary/30 group">
-    
-    <!-- Decorative background glow -->
-    <div class="absolute -top-24 -left-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700"></div>
-    <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-accent/20 rounded-full blur-3xl group-hover:bg-accent/30 transition-all duration-700"></div>
+<div class="min-h-[80vh] flex flex-col items-center justify-center p-2 md:p-6">
 
-    <div class="card-body items-center text-center relative z-10 p-0">
-      <!-- Icon/Shield representation -->
-      <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20 mb-6 animate-pulse">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-10 h-10 text-primary-content">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+  <!-- ================= LOADING STATE ================= -->
+  @if (loading()) {
+    <div class="card w-full max-w-xl bg-base-200/40 backdrop-blur-xl border border-base-content/10 shadow-2xl rounded-3xl p-8 items-center text-center animate-pulse">
+      <span class="loading loading-ring loading-lg text-primary mb-4 scale-125"></span>
+      <h3 class="text-xl font-bold text-base-content/80">Obteniendo datos de la API...</h3>
+      <p class="text-xs text-base-content/50 mt-2">Buscando información detallada para "{{ name() }}"</p>
+    </div>
+  }
+
+  <!-- ================= ERROR STATE ================= -->
+  @else if (error()) {
+    <div class="card w-full max-w-md bg-error/10 backdrop-blur-xl border border-error/20 shadow-2xl rounded-3xl p-8 items-center text-center">
+      <div class="w-16 h-16 rounded-full bg-error/20 flex items-center justify-center mb-4 text-error">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
         </svg>
       </div>
-
-      <!-- Super Hero Label -->
-      <span class="text-xs uppercase tracking-widest font-semibold text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full mb-4">
-        Perfil del Superhéroe
-      </span>
-
-      <!-- Super Hero Name (Big, beautiful gradient) -->
-      <h1 class="text-5xl md:text-7xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent tracking-tight drop-shadow-sm select-none py-2 leading-none">
-        {{ name() }}
-      </h1>
-
-      <p class="text-base-content/60 mt-4 max-w-md text-sm md:text-base">
-        Visualización de detalles en tiempo real. Este superhéroe está registrado activamente en la base de datos de tu aplicación Angular.
-      </p>
-
-      <div class="card-actions justify-center mt-10 w-full">
-        <a routerLink="/custom" class="btn btn-primary btn-wide rounded-2xl gap-2 hover:scale-102 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+      <h3 class="text-xl font-bold text-error">¡Oops! Algo salió mal</h3>
+      <p class="text-sm text-base-content/70 mt-2">{{ error() }}</p>
+      
+      <div class="card-actions mt-8 w-full">
+        <a routerLink="/custom" class="btn btn-outline btn-error w-full rounded-2xl gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
             <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
           </svg>
           Volver a Pipes Personalizados
         </a>
       </div>
     </div>
-  </div>
+  }
+
+  <!-- ================= HERO DETAIL STATE ================= -->
+  @else if (hero(); as data) {
+    <div class="w-full max-w-5xl bg-base-200/40 backdrop-blur-xl shadow-2xl border border-base-content/10 rounded-3xl overflow-hidden p-6 md:p-10 relative group">
+      
+      <!-- Decorative background glow -->
+      <div class="absolute -top-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-700"></div>
+      <div class="absolute -bottom-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl group-hover:bg-accent/20 transition-all duration-700"></div>
+
+      <div class="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-12">
+        
+        <!-- Left Column: Image, Specs and Back button -->
+        <div class="w-full lg:w-1/3 flex flex-col items-center">
+          <div class="w-64 h-80 rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/20 relative group-hover:border-primary/40 transition-all duration-300">
+            <img 
+              [src]="data.image.url" 
+              [alt]="data.name" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            
+            <!-- Alignment badge -->
+            <span 
+              class="absolute top-4 right-4 text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-lg border"
+              [class.bg-success/20]="data.biography.alignment === 'good'"
+              [class.text-success]="data.biography.alignment === 'good'"
+              [class.border-success/30]="data.biography.alignment === 'good'"
+              [class.bg-error/20]="data.biography.alignment === 'bad'"
+              [class.text-error]="data.biography.alignment === 'bad'"
+              [class.border-error/30]="data.biography.alignment === 'bad'"
+              [class.bg-warning/20]="data.biography.alignment === 'neutral' || data.biography.alignment === '-'"
+              [class.text-warning]="data.biography.alignment === 'neutral' || data.biography.alignment === '-'"
+              [class.border-warning/30]="data.biography.alignment === 'neutral' || data.biography.alignment === '-'"
+            >
+              {{ data.biography.alignment === 'good' ? 'Héroe' : data.biography.alignment === 'bad' ? 'Villano' : 'Neutral' }}
+            </span>
+          </div>
+
+          <!-- Specifications -->
+          <div class="flex gap-4 w-full mt-6 justify-center">
+            <div class="bg-base-300/40 border border-base-content/5 px-4 py-2 rounded-xl text-center flex-1">
+              <span class="text-xs text-base-content/40 block uppercase tracking-wider">Estatura</span>
+              <span class="text-sm font-bold">{{ data.appearance.height[1] !== '0 cm' ? data.appearance.height[1] : '-' }}</span>
+            </div>
+            <div class="bg-base-300/40 border border-base-content/5 px-4 py-2 rounded-xl text-center flex-1">
+              <span class="text-xs text-base-content/40 block uppercase tracking-wider">Peso</span>
+              <span class="text-sm font-bold">{{ data.appearance.weight[1] !== '0 kg' ? data.appearance.weight[1] : '-' }}</span>
+            </div>
+          </div>
+
+          <a routerLink="/custom" class="btn btn-outline btn-primary rounded-2xl w-full mt-8 gap-2 hover:scale-102 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            Volver a Pipes
+          </a>
+        </div>
+
+        <!-- Right Column: Biography, Powerstats, Physical specs -->
+        <div class="flex-1 flex flex-col gap-6">
+          
+          <!-- Header -->
+          <div>
+            <span class="text-xs uppercase tracking-widest font-black text-secondary/80 bg-secondary/10 px-3 py-1 rounded-full">
+              ID: #{{ data.id }}
+            </span>
+            <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent tracking-tight mt-2 select-none">
+              {{ data.name }}
+            </h1>
+            <h2 class="text-lg font-light text-base-content/70 mt-1 italic">
+              {{ data.biography['full-name'] || data.name }}
+            </h2>
+          </div>
+
+          <!-- Grid Section -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+            
+            <!-- Powerstats Section -->
+            <div class="bg-base-300/20 border border-base-content/5 p-5 rounded-2xl">
+              <h3 class="text-md font-bold mb-4 flex items-center gap-2 border-b border-base-content/10 pb-2 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                </svg>
+                Estadísticas de Poder
+              </h3>
+              
+              <div class="space-y-3">
+                <!-- Intelligence -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Inteligencia</span>
+                    <span>{{ data.powerstats.intelligence }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-primary w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.intelligence)" 
+                    max="100"
+                  ></progress>
+                </div>
+
+                <!-- Strength -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Fuerza</span>
+                    <span>{{ data.powerstats.strength }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-secondary w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.strength)" 
+                    max="100"
+                  ></progress>
+                </div>
+
+                <!-- Speed -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Velocidad</span>
+                    <span>{{ data.powerstats.speed }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-accent w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.speed)" 
+                    max="100"
+                  ></progress>
+                </div>
+
+                <!-- Durability -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Durabilidad</span>
+                    <span>{{ data.powerstats.durability }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-info w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.durability)" 
+                    max="100"
+                  ></progress>
+                </div>
+
+                <!-- Power -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Poder</span>
+                    <span>{{ data.powerstats.power }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-warning w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.power)" 
+                    max="100"
+                  ></progress>
+                </div>
+
+                <!-- Combat -->
+                <div>
+                  <div class="flex justify-between text-xs font-semibold mb-1">
+                    <span>Combate</span>
+                    <span>{{ data.powerstats.combat }}%</span>
+                  </div>
+                  <progress 
+                    class="progress progress-error w-full h-2" 
+                    [value]="getStatNumber(data.powerstats.combat)" 
+                    max="100"
+                  ></progress>
+                </div>
+              </div>
+            </div>
+
+            <!-- Biography Section -->
+            <div class="bg-base-300/20 border border-base-content/5 p-5 rounded-2xl flex flex-col gap-4">
+              <h3 class="text-md font-bold flex items-center gap-2 border-b border-base-content/10 pb-2 text-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                </svg>
+                Ficha Biográfica
+              </h3>
+              
+              <div class="text-xs space-y-2 flex-1">
+                <div>
+                  <span class="text-base-content/40 block uppercase tracking-wider">Nombre Completo:</span>
+                  <span class="font-semibold text-sm">{{ data.biography['full-name'] || data.name }}</span>
+                </div>
+                <div>
+                  <span class="text-base-content/40 block uppercase tracking-wider">Editorial:</span>
+                  <span class="font-semibold text-sm">{{ data.biography.publisher || 'Desconocido' }}</span>
+                </div>
+                <div>
+                  <span class="text-base-content/40 block uppercase tracking-wider">Lugar de Nacimiento:</span>
+                  <span class="font-semibold text-sm">{{ data.biography['place-of-birth'] || '-' }}</span>
+                </div>
+                <div>
+                  <span class="text-base-content/40 block uppercase tracking-wider">Primera Aparición:</span>
+                  <span class="font-semibold text-sm text-secondary">{{ data.biography['first-appearance'] || '-' }}</span>
+                </div>
+                <div>
+                  <span class="text-base-content/40 block uppercase tracking-wider">Alias conocidos:</span>
+                  <div class="flex flex-wrap gap-1 mt-1">
+                    @for (alias of data.biography.aliases; track alias) {
+                      <span class="badge badge-outline badge-xs text-base-content/70">{{ alias }}</span>
+                    } @empty {
+                      <span class="text-base-content/50 font-semibold">-</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Appearance & Profile Details -->
+          <div class="bg-base-300/20 border border-base-content/5 p-5 rounded-2xl">
+            <h3 class="text-md font-bold mb-4 flex items-center gap-2 border-b border-base-content/10 pb-2 text-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+              </svg>
+              Perfil Físico y Ocupación
+            </h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Género:</span>
+                <span class="font-bold text-sm">{{ data.appearance.gender || '-' }}</span>
+              </div>
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Raza:</span>
+                <span class="font-bold text-sm">{{ data.appearance.race !== 'null' ? data.appearance.race : '-' }}</span>
+              </div>
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Color de Ojos:</span>
+                <span class="font-bold text-sm">{{ data.appearance['eye-color'] || '-' }}</span>
+              </div>
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Color de Cabello:</span>
+                <span class="font-bold text-sm">{{ data.appearance['hair-color'] || '-' }}</span>
+              </div>
+            </div>
+
+            <div class="divider my-2"></div>
+
+            <div class="text-xs mt-2 space-y-2">
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Ocupación:</span>
+                <span class="font-semibold text-sm">{{ data.work.occupation !== '-' ? data.work.occupation : 'Desconocida' }}</span>
+              </div>
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Base de Operaciones:</span>
+                <span class="font-semibold text-sm">{{ data.work.base !== '-' ? data.work.base : 'Móvil / Desconocida' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Connections Section -->
+          <div class="bg-base-300/20 border border-base-content/5 p-5 rounded-2xl">
+            <h3 class="text-md font-bold mb-3 flex items-center gap-2 border-b border-base-content/10 pb-2 text-info">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94-3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+              </svg>
+              Afiliaciones y Relaciones
+            </h3>
+            
+            <div class="text-xs space-y-3">
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Grupo de Afiliación:</span>
+                <span class="font-semibold text-sm">{{ data.connections['group-affiliation'] !== '-' ? data.connections['group-affiliation'] : 'Ninguno conocido' }}</span>
+              </div>
+              <div>
+                <span class="text-base-content/40 block uppercase tracking-wider">Familiares / Parientes:</span>
+                <span class="font-semibold text-sm">{{ data.connections.relatives !== '-' ? data.connections.relatives : 'Ninguno registrado' }}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  }
 </div>
