@@ -65,7 +65,7 @@ export class SuperheroService {
           'relatives': 'Joseph Garrick (father), Joan Williams (wife), Arthur Williams (father-in-law), unnamed adopted son (deceased), Bart Allen (Flash II, ward)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1608889175123-8ec330b86f84?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/891.jpg'
         }
       },
       {
@@ -105,7 +105,7 @@ export class SuperheroService {
           'relatives': 'Lois Lane (wife), Jor-El (father, deceased), Lara Lor-Van (mother, deceased), Jonathan Kent (adoptive father, deceased), Martha Kent (adoptive mother)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1608889175250-c3b0c1667d3a?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/791.jpg'
         }
       },
       {
@@ -145,7 +145,7 @@ export class SuperheroService {
           'relatives': 'Thomas Wayne (father, deceased), Martha Wayne (mother, deceased), Damian Wayne (son), Dick Grayson (adoptive son), Jason Todd (adoptive son), Tim Drake (adoptive son)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1531259683007-016a7b628fc3?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/639.jpg'
         }
       },
       {
@@ -185,7 +185,7 @@ export class SuperheroService {
           'relatives': 'Odin (father), Gaea (mother), Frigga (adoptive mother), Loki (adoptive brother)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1608889476561-6242cfdbf622?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/140.jpg'
         }
       },
       {
@@ -225,7 +225,7 @@ export class SuperheroService {
           'relatives': 'Brian Banner (father, deceased), Rebecca Banner (mother, deceased), Betty Ross (ex-wife)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1608889334960-9388df2944b2?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/83.jpg'
         }
       },
       {
@@ -265,7 +265,7 @@ export class SuperheroService {
           'relatives': 'Richard Parker (father, deceased), Mary Parker (mother, deceased), Ben Parker (uncle, deceased), May Parker (aunt)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1604200213928-ba3cf4fc8436?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/133.jpg'
         }
       },
       {
@@ -305,7 +305,7 @@ export class SuperheroService {
           'relatives': 'Howard Stark (father, deceased), Maria Stark (mother, deceased)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1608889174649-41864385f200?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/85.jpg'
         }
       },
       {
@@ -345,7 +345,7 @@ export class SuperheroService {
           'relatives': 'John Howlett Sr. (father, deceased), Elizabeth Howlett (mother, deceased)'
         },
         image: {
-          url: 'https://images.unsplash.com/photo-1500485035595-cbe6f645feb1?w=600&auto=format&fit=crop&q=80'
+          url: 'https://www.superherodb.com/pictures2/portraits/10/100/161.jpg'
         }
       }
     ];
