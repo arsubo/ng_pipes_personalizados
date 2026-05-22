@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { SuperheroSearchResponse } from '../interfaces/superhero-api.interface';
+import { SUPERHERO_API_CONFIG } from '../config/superhero-api.config';
 
 @Injectable({
   providedIn: 'root',
@@ -9,11 +10,11 @@ import { SuperheroSearchResponse } from '../interfaces/superhero-api.interface';
 export class SuperheroService {
   private readonly http = inject(HttpClient);
 
-  // Token de acceso de la API de SuperHero (configurable)
-  public readonly accessToken = signal('3a56f2ce3c15a8ac5389ac3c662aa484');
+  // Token de acceso de la API de SuperHero (leído desde el archivo de configuración)
+  public readonly accessToken = signal(SUPERHERO_API_CONFIG.accessToken);
 
   searchHeroByName(name: string): Observable<SuperheroSearchResponse> {
-    const url = `https://superheroapi.com/api/${this.accessToken()}/search/${name}`;
+    const url = `${SUPERHERO_API_CONFIG.baseUrl}/${this.accessToken()}/search/${name}`;
     
     return this.http.get<SuperheroSearchResponse>(url).pipe(
       catchError((error) => {
