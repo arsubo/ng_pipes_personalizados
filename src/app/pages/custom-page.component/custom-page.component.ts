@@ -9,6 +9,7 @@ import { HeroCreatorPipe } from '../../pipes/hero-creator.pipe';
 import { HeroSortByPipe } from '../../pipes/hero-sort-by.pipe';
 import { Hero } from '../../interfaces/hero.interface';
 import { HeroFilterPipe } from '../../pipes/hero-filter.pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'custom-page',
@@ -21,6 +22,7 @@ import { HeroFilterPipe } from '../../pipes/hero-filter.pipe';
     HeroCreatorPipe,
     HeroSortByPipe,
     HeroFilterPipe,
+    RouterLink,
   ],
   templateUrl: './custom-page.component.html',
 })

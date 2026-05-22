@@ -22,6 +22,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/custom-page.component/custom-page.component'),
   },
   {
+    path: 'hero/:name',
+    title: 'Detalle de Héroe',
+    loadComponent: () => import('./pages/hero-page.component/hero-page.component'),
+  },
+  {
     path: '**',
     redirectTo: 'basic',
   },

@@ -57,7 +57,14 @@
       ) {
         <tr>
           <td>{{ i + 1 }}</td>
-          <td>{{ hero.name }}</td>
+          <td>
+            <a
+              [routerLink]="['/hero', hero.name]"
+              class="link link-primary hover:link-accent transition-all duration-300 font-semibold"
+            >
+              {{ hero.name }}
+            </a>
+          </td>
           <td>
             <span
               class="text-xs w-44"
